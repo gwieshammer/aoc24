@@ -1,0 +1,1 @@
+cat Day03.txt | perl -e '$s=0;$c=1;while(<>){$l=$_;while($l=~m/(mul\((\d{1,3}),(\d{1,3})\)|don'"'"'t\(\)|do\(\))/g){print $1," ",$2," ",$3," ",$c,"\n";if($1=~m/^do\(/){$c=1;}elsif($1=~m/^don/){$c=2;}else{$s+=$2*$3*($c%2);}}}print$s'
