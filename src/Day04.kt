@@ -1,20 +1,11 @@
-
+fun <S> List<S>.cartesianProductSelf() : List<Pair<S,S>> = this.flatMap { s -> List(size) { s }.zip (this) }
 class SparseLetters(
     val xmasLetters: List<Char>
 ) {
     val letters = mutableMapOf<Int, MutableMap<Int, Char>>()
     var rows : Int = 0 // current amount of rows
     var cols : Int = 0 // ... columns
-    val dirs = listOf(
-        Pair(1, 1),
-        Pair(1, 0),
-        Pair(1, -1),
-        Pair(0, 1),
-        Pair(0, -1),
-        Pair(-1, 1),
-        Pair(-1, 0),
-        Pair(-1, -1)
-        )
+    val dirs = IntRange(-1, 1).toList().cartesianProductSelf().filter { it.first != 0 || it.second != 0 }
     fun getCountXmasStarting(row: Int, column: Int) : Int {
         var count = 0
         for (dirIndex in 0..dirs.size - 1) {
@@ -33,6 +24,7 @@ class SparseLetters(
         }
         return 0
     }
+    // Given there as an A at row, column: Check there are M and S in the diagonals (any direction)
     fun getCountXDashMasStarting(row: Int, column: Int) : Int {
         val slashLine = "".plus(get(row + 1, column - 1)).plus(get(row - 1, column + 1))
         val backslashLine = "".plus(get(row - 1, column - 1)).plus(get(row + 1, column + 1))
