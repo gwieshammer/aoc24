@@ -39,8 +39,19 @@ class Array2D<T> {
     }
 }
 data class Coordinate(val x: Int, val y: Int) {
-    operator fun plus(other: Coordinate): Pair<Int, Int> = Pair(x + other.x, y + other.y)
-    operator fun minus(other: Coordinate): Pair<Int, Int> = Pair(x - other.x, y - other.y)
+    operator fun plus(other: Coordinate): Coordinate = Coordinate(x + other.x, y + other.y)
+    operator fun minus(other: Coordinate): Coordinate = Coordinate(x - other.x, y - other.y)
     operator fun plus(diff: Pair<Int, Int>) = copy(x = x + diff.first, y = y + diff.second)
     operator fun minus(diff: Pair<Int, Int>) = copy(x = x - diff.first, y = y - diff.second)
+    fun timesTeleportingInBathroom(vector: Coordinate, times: Int, wide: Int, tall: Int) : Coordinate {
+        var fX = ((x + vector.x * times) % wide).toInt()
+        if (fX < 0) {
+            fX = wide + fX
+        }
+        var fY = ((y + vector.y * times) % tall).toInt()
+        if (fY < 0) {
+            fY = tall + fY
+        }
+        return Coordinate(fX, fY)
+    }
 }
